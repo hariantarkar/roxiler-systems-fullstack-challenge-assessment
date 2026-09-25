@@ -1,0 +1,14 @@
+.home-navbar { border-bottom: 1px solid #e5e7eb; background-color: #fff; }
+.hero-grid-bg {
+  background-color: #f8fafc;
+  background-image: linear-gradient(#e5e7eb 1px, transparent 1px), linear-gradient(90deg, #e5e7eb 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+.demo-card { background-color: #0f1729; border-radius: 14px; padding: 20px; }
+.live-dot { width: 8px; height: 8px; border-radius: 50%; background-color: #22c55e; display: inline-block; }
+.role-card { border: 1px solid #e5e7eb; transition: transform 0.15s ease, box-shadow 0.15s ease; }
+.role-card:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08); }
+.step-num { font-weight: 700; color: #2563eb; font-size: 1.2rem; }
+.feature-icon { width: 36px; height: 36px; border-radius: 8px; background-color: #dcfce7; color: #16a34a; display: flex; align-items: center; justify-content: center; }
+.cta-banner { background: linear-gradient(135deg, #0f1729, #1e3a8a); }
+.home-footer { border-top: 1px solid #e5e7eb; background-color: #fff; }
