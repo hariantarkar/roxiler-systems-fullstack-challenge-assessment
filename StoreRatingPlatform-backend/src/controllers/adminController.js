@@ -50,7 +50,7 @@ exports.addUser = async (req, res) => {
     }
 
     const encPass = bcrypt.hashSync(password, 8);
-    const result = await userModel.registerUser(name, email, address, encPass, role);
+    const result = await userModel.registerUser(name, email, address, encPass, role, true);
 
     if (result.affectedRows >= 1) {
       res.status(201).json({ success: true, message: "User added successfully" });
@@ -94,5 +94,42 @@ exports.getUserDetails = async (req, res) => {
   } catch (err) {
     console.error("Error in getUserDetails:", err);
     res.status(500).json({ success: false, message: "Server error while fetching user details" });
+  }
+};
+
+// admin/store_owner accounts created via public self-registration wait here until approved
+exports.getPendingUsers = async (req, res) => {
+  try {
+    const pendingUsers = await userModel.getPendingUsers();
+    res.status(200).json({ success: true, data: pendingUsers });
+  } catch (err) {
+    console.error("Error in getPendingUsers:", err);
+    res.status(500).json({ success: false, message: "Server error while fetching pending users" });
+  }
+};
+
+exports.approveUser = async (req, res) => {
+  const { uid } = req.params;
+
+  try {
+    const result = await userModel.approveUser(uid);
+    if (result.affectedRows > 0) {
+      res.status(200).json({ success: true, message: "User approved successfully" });
+    } else {
+      res.status(404).json({ success: false, message: "User not found" });
+    }
+  } catch (err) {
+    console.error("Error in approveUser:", err);
+    res.status(500).json({ success: false, message: "Server error while approving user" });
+  }
+};
+ // admin/store_owner accounts created via public self-registration wait here until approved
+exports.getPendingUsers = async (req, res) => {
+  try {
+    const pendingUsers = await userModel.getPendingUsers();
+    res.status(200).json({ success: true, data: pendingUsers });
+  } catch (err) {
+    console.error("Error in getPendingUsers:", err);
+    res.status(500).json({ success: false, message: "Server error while fetching pending users" });
   }
 };

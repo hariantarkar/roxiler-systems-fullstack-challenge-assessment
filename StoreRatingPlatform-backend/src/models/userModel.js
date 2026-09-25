@@ -1,17 +1,16 @@
 let conn = require("../../db.js");
 
-exports.registerUser = async (name, email, address, encPass, role) => {
+exports.registerUser = async (name, email, address, encPass, role, status) => {
   try {
     const [result] = await conn.query(
-      "insert into users (name, email, address, password, role) values (?, ?, ?, ?, ?)",
-      [name, email, address, encPass, role]
+      "insert into users (name, email, address, password, role, status) values (?, ?, ?, ?, ?, ?)",
+      [name, email, address, encPass, role, status]
     );
     return result;
   } catch (err) {
     throw err;
   }
 };
-
 exports.findUserByEmail = async (email) => {
   try {
     const [rows] = await conn.query("select * from users where email = ?", [email]);
@@ -51,8 +50,8 @@ const allowedSortColumns = ["name", "email", "address", "role"];
 exports.getAllUsers = async (filters) => {
   const { name, email, address, role, sortBy, order } = filters;
 
-  let query = "select uid, name, email, address, role from users where 1=1";
-  const values = [];
+  let query = "select uid, name, email, address, role from users where status = true";
+const values = [];
 
   if (name) {
     query += " and name like ?";
@@ -92,8 +91,36 @@ exports.countUsers = async () => {
   }
 };
 
+exports.getPendingUsers = async () => {
+  try {
+    const [rows] = await conn.query(
+      "select uid, name, email, address, role from users where status = false"
+    );
+    return rows;
+  } catch (err) {
+    throw err;
+  }
+};
 
+exports.approveUser = async (uid) => {
+  try {
+    const [result] = await conn.query("update users set status = true where uid = ?", [uid]);
+    return result;
+  } catch (err) {
+    throw err;
+  }
+};
 
+exports.getPendingUsers = async () => {
+  try {
+    const [rows] = await conn.query(
+      "select uid, name, email, address, role from users where status = false"
+    );
+    return rows;
+  } catch (err) {
+    throw err;
+  }
+};
 
 
 

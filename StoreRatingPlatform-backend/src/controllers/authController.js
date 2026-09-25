@@ -17,7 +17,9 @@ exports.loginUser = async (req, res) => {
     if (!isMatch) {
       return res.status(401).json({ success: false, message: "Invalid credentials." });
     }
-
+    if (!user.status) {
+       return res.status(403).json({ success: false, message: "Your account is pending admin approval." });
+  }
     const token = jwt.sign(
       { uid: user.uid, username: user.name, role: user.role },
       secretKey,

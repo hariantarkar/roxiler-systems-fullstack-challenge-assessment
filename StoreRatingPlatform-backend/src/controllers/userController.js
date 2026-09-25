@@ -1,9 +1,10 @@
 const userModel = require("../models/userModel.js");
 const bcrypt = require("bcrypt");
 const { validateName, validateAddress, validateEmail, validatePassword } = require("../utils/validators.js");
+const PUBLIC_ROLES = ["normal_user", "admin", "store_owner"];
 
 exports.registerUser = async (req, res) => {
-  const { name, email, address, password } = req.body;
+  const { name, email, address, password, role } = req.body;
 
   if (!validateName(name)) {
     return res.status(400).json({ success: false, message: "Name must be between 20 and 60 characters." });
@@ -20,6 +21,9 @@ exports.registerUser = async (req, res) => {
       message: "Password must be 8-16 characters with at least one uppercase letter and one special character.",
     });
   }
+  if (!PUBLIC_ROLES.includes(role)) {
+    return res.status(400).json({ success: false, message: "Invalid role." });
+  }
 
   try {
     const existingUser = await userModel.findUserByEmail(email);
@@ -28,10 +32,16 @@ exports.registerUser = async (req, res) => {
     }
 
     const encPass = bcrypt.hashSync(password, 8);
-    const result = await userModel.registerUser(name, email, address, encPass, "normal_user");
+    // normal users are usable right away, admin/store_owner need an existing admin to approve them first
+    const status = role === "normal_user";
+    const result = await userModel.registerUser(name, email, address, encPass, role, status);
 
     if (result.affectedRows >= 1) {
-      res.status(201).json({ success: true, message: "Registration successful" });
+      res.status(201).json({
+        success: true,
+        message: status ? "Registration successful" : "Registration submitted. An admin needs to approve this account before you can log in.",
+        status,
+      });
     } else {
       res.status(400).json({ success: false, message: "Registration failed" });
     }

@@ -21,6 +21,17 @@ exports.getStoreById = async (sid) => {
   }
 };
 
+exports.updateStore = async (sid, name, email, address, ownerUid) => {
+  try {
+    const [result] = await conn.query(
+      "update stores set name = ?, email = ?, address = ?, owner_uid = ? where sid = ?",
+      [name, email, address, ownerUid || null, sid]
+    );
+    return result;
+  } catch (err) {
+    throw err;
+  }
+};
 // only these columns are allowed for sorting, to avoid SQL injection via query params
 const allowedSortColumns = ["name", "email", "address", "overallRating"];
 
