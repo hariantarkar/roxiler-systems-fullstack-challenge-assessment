@@ -1,7 +1,7 @@
 const userModel = require("../models/userModel.js");
 const storeModel = require("../models/storeModel.js");
 const ratingModel = require("../models/ratingModel.js");
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 const { validateName, validateAddress, validateEmail, validatePassword } = require("../utils/validators.js");
 
 exports.getDashboardStats = async (req, res) => {

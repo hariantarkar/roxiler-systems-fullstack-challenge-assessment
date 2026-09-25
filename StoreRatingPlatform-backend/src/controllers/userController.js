@@ -1,5 +1,5 @@
 const userModel = require("../models/userModel.js");
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 const { validateName, validateAddress, validateEmail, validatePassword } = require("../utils/validators.js");
 const PUBLIC_ROLES = ["normal_user", "admin", "store_owner"];
 
