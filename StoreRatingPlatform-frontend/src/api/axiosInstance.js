@@ -5,8 +5,6 @@ const axiosInstance = axios.create({
   withCredentials: true, // sends the JWT cookie set by the backend
 });
 
-// if the cookie expired or was cleared server-side, bounce back to login instead of
-// showing a broken dashboard full of failed requests
 axiosInstance.interceptors.response.use(
   (response) => response,
   (error) => {

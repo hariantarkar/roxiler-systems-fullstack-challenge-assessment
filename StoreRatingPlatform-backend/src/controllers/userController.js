@@ -32,7 +32,6 @@ exports.registerUser = async (req, res) => {
     }
 
     const encPass = bcrypt.hashSync(password, 8);
-    // normal users are usable right away, admin/store_owner need an existing admin to approve them first
     const status = role === "normal_user";
     const result = await userModel.registerUser(name, email, address, encPass, role, status);
 

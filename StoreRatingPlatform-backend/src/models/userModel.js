@@ -44,7 +44,6 @@ exports.updatePassword = async (uid, encPass) => {
   }
 };
 
-// only these columns are allowed for sorting, to avoid SQL injection via query params
 const allowedSortColumns = ["name", "email", "address", "role"];
 
 exports.getAllUsers = async (filters) => {

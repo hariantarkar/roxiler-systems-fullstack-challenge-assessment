@@ -62,8 +62,8 @@ const Home = () => {
                   <small className="text-uppercase text-secondary">Try a rating</small>
                   <span className="live-dot"></span>
                 </div>
-                <div className="fw-bold text-white">Rai's General Store</div>
-                <small className="text-secondary d-block mb-3">MG Road, Pune</small>
+                <div className="fw-bold text-white">TechStack Books</div>
+                <small className="text-secondary d-block mb-3">Warje, Pune</small>
                 <div>
                   {[1, 2, 3, 4, 5].map((s) => (
                     <i key={s} className={`bi ${s <= 4 ? "bi-star-fill" : "bi-star"} text-warning me-1`}></i>

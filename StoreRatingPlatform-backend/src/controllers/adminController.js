@@ -20,7 +20,6 @@ exports.getDashboardStats = async (req, res) => {
   }
 };
 
-// admin adding a user/admin/store-owner account (role is passed explicitly, unlike public signup)
 exports.addUser = async (req, res) => {
   const { name, email, address, password, role } = req.body;
 
@@ -84,7 +83,6 @@ exports.getUserDetails = async (req, res) => {
       return res.status(404).json({ success: false, message: "User not found" });
     }
 
-    // store owners additionally show their store's rating on the detail view
     if (user.role === "store_owner") {
       const [store] = await storeModel.getAllStores({ ownerUid: uid });
       user.rating = store ? store.overallRating : null;
@@ -97,7 +95,6 @@ exports.getUserDetails = async (req, res) => {
   }
 };
 
-// admin/store_owner accounts created via public self-registration wait here until approved
 exports.getPendingUsers = async (req, res) => {
   try {
     const pendingUsers = await userModel.getPendingUsers();
@@ -123,7 +120,6 @@ exports.approveUser = async (req, res) => {
     res.status(500).json({ success: false, message: "Server error while approving user" });
   }
 };
- // admin/store_owner accounts created via public self-registration wait here until approved
 exports.getPendingUsers = async (req, res) => {
   try {
     const pendingUsers = await userModel.getPendingUsers();

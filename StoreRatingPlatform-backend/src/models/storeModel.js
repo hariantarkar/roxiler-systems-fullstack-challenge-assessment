@@ -32,13 +32,11 @@ exports.updateStore = async (sid, name, email, address, ownerUid) => {
     throw err;
   }
 };
-// only these columns are allowed for sorting, to avoid SQL injection via query params
 const allowedSortColumns = ["name", "email", "address", "overallRating"];
 
 exports.getAllStores = async (filters) => {
   const { name, email, address, ownerUid, sortBy, order } = filters;
 
-  // left join + avg so stores with no ratings yet still show up (with rating null)
   let query = `
     select s.sid, s.name, s.email, s.address, s.owner_uid, ROUND(AVG(r.rating), 1) as overallRating
     from stores s
@@ -77,7 +75,6 @@ exports.getAllStores = async (filters) => {
     throw err;
   }
 };
-// stores with the logged-in normal user's own rating attached (null if they haven't rated yet)
 exports.getStoresForUser = async (uid, filters) => {
   const { name, address, sortBy, order } = filters;
 

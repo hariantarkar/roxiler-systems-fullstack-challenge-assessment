@@ -26,10 +26,16 @@ const App = () => {
           <ProtectedRoute allowedRoles={["admin"]}>
             <AdminDashboard />
           </ProtectedRoute>
-        }
-      /><Route path="/admin/users" element={<ProtectedRoute allowedRoles={["admin"]}><AdminUsers /></ProtectedRoute>} />
-<Route path="/admin/stores" element={<ProtectedRoute allowedRoles={["admin"]}><AdminStores /></ProtectedRoute>} />
-<Route path="/admin/pending" element={<ProtectedRoute allowedRoles={["admin"]}><AdminPending /></ProtectedRoute>} />
+        }/>
+      <Route path="/admin/users" element={
+        <ProtectedRoute allowedRoles={["admin"]}>
+        <AdminUsers /></ProtectedRoute>} />
+      <Route path="/admin/stores" element={
+        <ProtectedRoute allowedRoles={["admin"]}>
+        <AdminStores /></ProtectedRoute>} />
+      <Route path="/admin/pending" element={
+        <ProtectedRoute allowedRoles={["admin"]}>
+        <AdminPending /></ProtectedRoute>} />
 
       <Route
         path="/user/dashboard"
@@ -37,8 +43,7 @@ const App = () => {
           <ProtectedRoute allowedRoles={["normal_user"]}>
             <UserDashboard />
           </ProtectedRoute>
-        }
-      />
+        }/>
 
       <Route
         path="/owner/dashboard"
@@ -46,16 +51,15 @@ const App = () => {
           <ProtectedRoute allowedRoles={["store_owner"]}>
             <OwnerDashboard />
           </ProtectedRoute>
-        }
-      />
-     <Route
-  path="/change-password"
-  element={
-    <ProtectedRoute allowedRoles={["admin", "normal_user", "store_owner"]}>
-      <ChangePassword />
-    </ProtectedRoute>
-  }/>
-    </Routes>
+        }/>
+      <Route
+      path="/change-password"
+      element={
+       <ProtectedRoute allowedRoles={["admin", "normal_user", "store_owner"]}>
+        <ChangePassword />
+      </ProtectedRoute>
+     }/>
+     </Routes>
     
   );
 };

@@ -8,7 +8,6 @@ exports.countRatings = async () => {
     throw err;
   }
 };
-// insert if the user hasn't rated this store yet, otherwise update the existing rating
 exports.upsertRating = async (uid, sid, rating) => {
   try {
     const [result] = await conn.query(

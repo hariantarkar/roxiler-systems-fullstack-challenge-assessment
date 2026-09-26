@@ -65,7 +65,6 @@ exports.updateStore = async (req, res) => {
     res.status(500).json({ success: false, message: "Server error while updating store" });
   }
 };
-// normal user's store listing/search — includes their own submitted rating per store
 exports.getStoresForUser = async (req, res) => {
   const { name, address, sortBy, order } = req.query;
   const uid = req.user.uid;
