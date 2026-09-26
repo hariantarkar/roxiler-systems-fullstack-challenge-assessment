@@ -9,8 +9,11 @@ const userRouter = require("./src/routes/userRouter.js");
 const ownerRouter = require("./src/routes/ownerRouter.js");
 
 const app = express();
+const allowedOrigins = process.env.CORS_ORIGINS
+  ? process.env.CORS_ORIGINS.split(",")
+  : ["http://localhost:5173", "http://localhost:5174"];
 
-app.use(cors({ origin: "http://localhost:5173", credentials: true }));
+app.use(cors({ origin: allowedOrigins, credentials: true }));
 app.use(express.json());
 app.use(cookieParser());
 
